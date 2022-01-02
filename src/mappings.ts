@@ -10,7 +10,7 @@ import {
   DelegateChanged,
   DelegateVotesChanged,
   Transfer
-} from "../generated/CompoundToken/CompoundToken";
+} from "../generated/Candle/Candle";
 import {
   getOrCreateTokenHolder,
   getOrCreateDelegate,

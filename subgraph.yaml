@@ -1,7 +1,6 @@
-specVersion: 0.0.2
+specVersion: 0.0.5
 description: Candle governance subgraph
-repository: https://github.com/CandlePlatforms/governance-subgraph
-schema:
+repository: https://github.com/Candleplatforms/governance-subgraph
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
@@ -13,7 +12,7 @@ dataSources:
       startBlock: 9601459
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/mappings.ts
       entities:
@@ -37,7 +36,7 @@ dataSources:
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
   - kind: ethereum/contract
-    name: CompoundToken
+    name: Candle
     network: mainnet
     source:
       address: "0xbc138bD20C98186CC0342C8e380953aF0cb48BA8"
@@ -45,15 +44,15 @@ dataSources:
       startBlock: 9601359
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/mappings.ts
       entities:
         - Delegate
         - TokenHolder
       abis:
-        - name: CompoundToken
-          file: ./abis/CompoundToken.json
+        - name: Candle
+          file: ./abis/Candle.json
       eventHandlers:
         - event: DelegateChanged(indexed address,indexed address,indexed address)
           handler: handleDelegateChanged

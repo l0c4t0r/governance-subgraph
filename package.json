@@ -1,15 +1,15 @@
 {
-  "name": "candle",
+  "name": "Candle",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/candleplatforms/candlegovernor",
-    "deploy-dev": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/candleplatforms/candlegovernor",
-    "create-local": "graph create --node http://localhost:8020/ candleplatforms/candlegovernor",
-    "remove-local": "graph remove --node http://localhost:8020/ candleplatforms/candlegovernor",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 candleplatforms/candlegovernor"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/Candleplatforms/Candlegovernor",
+    "deploy-dev": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/Candleplatforms/Candlegovernor",
+    "create-local": "graph create --node http://localhost:8020/Candleplatforms/Candle-governance",
+    "remove-local": "graph remove --node http://localhost:8020/Candleplatforms/Candle-governance",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001/Candleplatforms/Candle-governance"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.17.1",
