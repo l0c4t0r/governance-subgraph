@@ -1,4 +1,4 @@
-## Compound Governance Subgraph
+## Candle Governance Subgraph
 
 This subgraph indexes and exposes in GraphQL all the event data related to the GovernorAlpha and CompoundToken contracts from Compound, providing an easy access to Token holder and Delegates information, Proposals and votes casted, and all the relationships between those entities.
 
