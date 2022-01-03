@@ -1,4 +1,7 @@
-## Candle Governance Subgraph
+## Candle (Compound) Governance Subgraph
+Forked from compound which uses Governor Alpha/Bravo
+
+Candle uses OpenZeppelin Governor
 
 This subgraph indexes and exposes in GraphQL all the event data related to the GovernorAlpha and Candle contracts from Candle, providing an easy access to Token holder and Delegates information, Proposals and votes casted, and all the relationships between those entities.
 
