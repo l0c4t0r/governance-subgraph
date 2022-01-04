@@ -6,14 +6,6 @@ import {
   Vote
 } from "../../generated/schema";
 import {
-  Address,
-  EthereumEvent,
-  BigInt,
-  Bytes,
-  log
-} from "@graphprotocol/graph-ts";
-import { DEFAULT_DECIMALS, toDecimal } from "./decimals";
-import {
   ZERO_ADDRESS,
   BIGINT_ZERO,
   BIGINT_ONE,
@@ -36,7 +28,7 @@ export function getOrCreateTokenHolder(
 
     if (id != ZERO_ADDRESS) {
       let governance = getGovernanceEntity();
-      governance.totalTokenHolders = governance.totalTokenHolders + BIGINT_ONE;
+      governance.totalTokenHolders += BIGINT_ONE;
       governance.save();
     }
 
@@ -63,7 +55,7 @@ export function getOrCreateDelegate(
 
     if (id != ZERO_ADDRESS) {
       let governance = getGovernanceEntity();
-      governance.totalDelegates = governance.totalDelegates + BIGINT_ONE;
+      governance.totalDelegates += BIGINT_ONE;
       governance.save();
     }
 
@@ -105,7 +97,7 @@ export function getOrCreateProposal(
 
     let governance = getGovernanceEntity();
 
-    governance.proposals = governance.proposals + BIGINT_ONE;
+    governance.proposals += BIGINT_ONE;
     governance.save();
 
     if (save) {

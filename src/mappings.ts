@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, Value, log } from "@graphprotocol/graph-ts";
+import { Bytes, log } from "@graphprotocol/graph-ts";
 import {
   ProposalCreated,
   ProposalCanceled,
@@ -53,7 +53,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposer = getOrCreateDelegate(event.params.proposer.toHexString());
 
   proposal.proposer = proposer.id;
-  proposal.targets = event.params.targets as Bytes[];
+  proposal.targets = event.params.targets.map<Bytes>(item => item as Bytes);
   proposal.values = event.params.values;
   proposal.signatures = event.params.signatures;
   proposal.calldatas = event.params.calldatas;
@@ -87,7 +87,7 @@ export function handleProposalQueued(event: ProposalQueued): void {
   proposal.executionETA = event.params.eta;
   proposal.save();
 
-  governance.proposalsQueued = governance.proposalsQueued + BIGINT_ONE;
+  governance.proposalsQueued += BIGINT_ONE;
   governance.save();
 }
 
@@ -102,7 +102,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
   proposal.executionETA = null;
   proposal.save();
 
-  governance.proposalsQueued = governance.proposalsQueued - BIGINT_ONE;
+  governance.proposalsQueued -= BIGINT_ONE;
   governance.save();
 }
 
@@ -183,12 +183,12 @@ export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
     event.params.previousBalance == BIGINT_ZERO &&
     event.params.newBalance > BIGINT_ZERO
   ) {
-    governance.currentDelegates = governance.currentDelegates + BIGINT_ONE;
+    governance.currentDelegates += BIGINT_ONE;
   }
   if (event.params.newBalance == BIGINT_ZERO) {
-    governance.currentDelegates = governance.currentDelegates - BIGINT_ONE;
+    governance.currentDelegates -= BIGINT_ONE;
   }
-  governance.delegatedVotesRaw = governance.delegatedVotesRaw + votesDifference;
+  governance.delegatedVotesRaw += votesDifference;
   governance.delegatedVotes = toDecimal(governance.delegatedVotesRaw);
   governance.save();
 }
@@ -204,8 +204,7 @@ export function handleTransfer(event: Transfer): void {
   // fromHolder
   if (event.params.from.toHexString() != ZERO_ADDRESS) {
     let fromHolderPreviousBalance = fromHolder.tokenBalanceRaw;
-    fromHolder.tokenBalanceRaw =
-      fromHolder.tokenBalanceRaw - event.params.amount;
+    fromHolder.tokenBalanceRaw -= event.params.amount;
     fromHolder.tokenBalance = toDecimal(fromHolder.tokenBalanceRaw);
 
     if (fromHolder.tokenBalanceRaw < BIGINT_ZERO) {
@@ -236,24 +235,22 @@ export function handleTransfer(event: Transfer): void {
 
   // toHolder
   let toHolderPreviousBalance = toHolder.tokenBalanceRaw;
-  toHolder.tokenBalanceRaw = toHolder.tokenBalanceRaw + event.params.amount;
+  toHolder.tokenBalanceRaw += event.params.amount;
   toHolder.tokenBalance = toDecimal(toHolder.tokenBalanceRaw);
-  toHolder.totalTokensHeldRaw = toHolder.totalTokensHeldRaw + event.params.amount;
+  toHolder.totalTokensHeldRaw += event.params.amount;
   toHolder.totalTokensHeld = toDecimal(toHolder.totalTokensHeldRaw);
 
   if (
     toHolder.tokenBalanceRaw == BIGINT_ZERO &&
     toHolderPreviousBalance > BIGINT_ZERO
   ) {
-    governance.currentTokenHolders =
-      governance.currentTokenHolders - BIGINT_ONE;
+    governance.currentTokenHolders -= BIGINT_ONE;
     governance.save();
   } else if (
     toHolder.tokenBalanceRaw > BIGINT_ZERO &&
     toHolderPreviousBalance == BIGINT_ZERO
   ) {
-    governance.currentTokenHolders =
-      governance.currentTokenHolders + BIGINT_ONE;
+    governance.currentTokenHolders += BIGINT_ONE;
     governance.save();
   }
 
